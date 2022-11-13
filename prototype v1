@@ -1,0 +1,100 @@
+// Emotive Objects project
+// DIGF-6037-301; OCAD U
+// Taught by Nick Puckett and Xuan Ye
+// Prototype v1: 
+// by Rim Armouch, David Oppenheim, Gavin Tao
+
+
+#include <Servo.h>
+
+Servo cntServo1; // Statue servo
+int spin1 = 2;
+Servo cntServo2; // Spool servo
+int spin2 = 3;
+
+int lightValue1; 
+int lightValue2; 
+// int lightValue3; 
+// int lightValue4; 
+
+
+int sensorPin1 = A0; 
+int sensorPin2 = A1; 
+// int sensorPin3 = A2; 
+// int sensorPin4 = A3; 
+
+
+// int potPin1 = A5;
+// int potValue1; 
+
+// int controlServo; // variable to map pot to servo values
+
+void setup() {
+
+// Servo1 and Servo2
+cntServo1.attach(spin1); // Statue servo
+cntServo2.attach(spin2);  // Spool servo
+
+// Set servos to netural 
+cntServo1.write(93); // Statue  servo
+cntServo2.write(92); // Spool servo
+
+}
+
+void loop() {
+
+lightValue1 = analogRead(sensorPin1);
+lightValue2 = analogRead(sensorPin2);
+// lightValue3 = analogRead(sensorPin3);
+// lightValue4 = analogRead(sensorPin4);
+
+//potValue1 = analogRead(potPin1); // for pot to control servos
+
+// Code to detect light values in location
+// Serial.println("Light 1");
+// Serial.print(lightValue1);
+// Serial.println("Light 2");
+// Serial.print(lightValue2);
+
+/// Code to detect user in front of light sensor1
+
+if (lightValue1 <=650){
+
+  Serial.println("userPresent1");
+  Serial.print(lightValue1);
+
+  cntServo1.write(97); // Statue  servo
+  cntServo2.write(86); // Spool servo
+
+ }
+/// Code to detect user in front of light sensor2
+
+ else if (lightValue2 <=650) {
+
+  Serial.println("userPresent2");
+  Serial.print(lightValue2);
+
+  cntServo1.write(83); // Statue  servo
+  cntServo2.write(94); // Spool servo
+
+ }
+  else // if no one, stop servos
+
+     {Serial.println("noOne");
+    
+    Serial.print(lightValue1);
+    Serial.print(lightValue2);
+    
+    cntServo1.write(86); // Statue servo
+    cntServo2.write(93); // Spool servo
+
+
+     }
+
+// // Code to control servo using pot1
+
+// controlServo = map(analogRead(A1),0,1023,0,180); // map potPin1 to cntServo1 values
+
+//   cntServo1.write(controlServo);
+
+}
